@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Voronoi base</title>
+<style type="text/css">
+  body {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #canvas_wrapper {
+    float: left;
+    border: 1px solid;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+
+  #controls_wrapper {
+    float: right;
+    border: 1px solid;
+  }
+</style>
+
+<script type="text/javascript" src="ui.js">
+</script>
+
+</head>
+
+<body onload="setup();">
+
+<div id="canvas_wrapper">
+  <canvas id="canvas" width="800" height="600"></canvas>
+</div>
+
+<div id="controls_wrapper">
+  <p><label><input type="radio" id="add_points" name="add_or_remove_points" checked="checked"/>Add points</label></p>
+  <p><label><input type="radio" id="remove_points" name="add_or_remove_points"/>Remove points</label></p>
+  <p><button id="clear_points">Clear points</button></p>
+  <p><button id="load_preset_1">Load Preset #1</button></p>
+  <p><button id="run_custom">Run Custom Algorithm</button></p>
+  <p><button id="run_fortune">Run Bundled Fortune's Algorithm</button></p>
+  <p><label>Fill cells with color? <input type="checkbox" name="fill_cells_with_color" id="fill_cells_with_color" /></label></p>
+</div>
+
+</body>
+</html>
