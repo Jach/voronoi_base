@@ -7,7 +7,6 @@ import io.javalin.embeddedserver.Location;
 import be.humphreys.simplevoronoi.GraphEdge;
 import be.humphreys.simplevoronoi.Voronoi;
 
-import org.json.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +44,7 @@ public class Application {
    * each value being numeric and defining the edge lines starting at x0,y0 and ending at x1,y1.
    */
   public static void handleGenerate(Context ctx) {
-      String algo = ctx.param("algorithm");
+      //String algo = ctx.param("algorithm");
 
       GenerateInputHandler handler = new GenerateInputHandler();
 
