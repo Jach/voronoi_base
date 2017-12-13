@@ -163,6 +163,8 @@ function redraw_canvas() {
 
   ctx.fillStyle = '#000000';
 
+  ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
   for (var i = 0; i < points.length; i++) {
     var point = points[i];
     ctx.beginPath();
