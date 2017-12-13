@@ -9,13 +9,30 @@ stringified to JSON. The structure contains at a minimum a set of edges specifie
 
 Included is an old implementation of the classic Fortune's algorithm to check against. The idea is that using a similar
 interface, the interviewer + candidate should be able to work on algorithm(s) generating the same data. Maybe even work
-up to an independent implementation of Fortune's Algorithm itself!
+up to an independent implementation of Fortune's Algorithm itself! But it also provides a base framework for the interviewer
+to request working code that is easy to verify. e.g. Could ask for an implementation of graph coloring, or just some
+proving ground code like generating a Voronoi diagram containing only two points. Can discuss better refactors,
+improvements, test coverage. Lots of options.
 
 # Usage
 
-After checking out this repo and changing directories into it:
+This project is composed of two projects.
+
+If you use Eclipse, and have the m2e plugin installed, set up the first project (this one) with:
+
+`File -> Import -> Maven -> Existing Maven Projects -> Select the Voronoi Base folder`
+
+You should see an error about the simplevoronoi project not being found. To fix the error, import that project as well.
+
+`File -> Import -> Maven -> Existing Maven Projects -> Select the simplevoronoi folder`
+
+Once that is done you should be able to launch Application.java.
+
+If you want to use the command line only, you need to run two maven commands.
 
 ```
+git clone https://github.com/Jach/voronoi_base
+cd voronoi_base
 cd simplevoronoi
 mvn clean install
 cd ..
@@ -26,7 +43,7 @@ Then you can launch the application with
 
 `mvn exec:java`
 
-or just running
+and further change-run cycles with `mvn compile exec:java`, alternatively you can just run the uberjar that was packaged:
 
 `java -jar target/voronoi_base-1.0-SNAPSHOT-jar-with-dependencies.jar`
 

@@ -1,3 +1,6 @@
 .*swp
 target
 simplevoronoi/target
+.classpath
+.project
+.settings
