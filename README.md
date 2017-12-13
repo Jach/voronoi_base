@@ -4,15 +4,20 @@ Base code for conducting a new interview experiment: let the interviewer and the
 come up with and analyze algorithm(s) for generating Voronoi diagrams!
 
 The simple frontend lets the user specify points. Clicking either of the two algorithm buttons
-will send the point list up to the server. The server should respond with a VoronoiGraph data structure
-stringified to JSON. The structure contains at a minimum a set of edges specified as lines from [[x0, y0], [x1, y1]].
+will send the point list up to the server. The server should respond with a Graph data structure
+stringified to JSON. The structure contains at a minimum an "edges" property whose data is an array of
+line objects, each specified with `{x0: x0, y0: y0, x1: x1, y1: y1}` to define the line between points (x0, y0) and (x1, y1).
+See `ui.js` for further details.
 
 Included is an old implementation of the classic Fortune's algorithm to check against. The idea is that using a similar
 interface, the interviewer + candidate should be able to work on algorithm(s) generating the same data. Maybe even work
 up to an independent implementation of Fortune's Algorithm itself! But it also provides a base framework for the interviewer
 to request working code that is easy to verify. e.g. Could ask for an implementation of graph coloring, or just some
 proving ground code like generating a Voronoi diagram containing only two points. Can discuss better refactors,
-improvements, test coverage. Lots of options.
+improvements, test coverage. Can discuss augmenting the graph structure with the site data or bounding polygon info or other
+things to facilitate coloring, answering geospatial queries, implementing convex hull, etc. Lots and lots of options.
+
+![Result of bundled fortune's algorithm](screenshot.png)
 
 # Usage
 
