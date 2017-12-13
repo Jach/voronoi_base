@@ -17,6 +17,13 @@ public class CustomAlgorithm implements VoronoiAlgorithm {
 
   @Override
   public void generate() {
+    // Problem statement:
+    // Observe the behavior of Voronoi diagrams generated from two points.
+    // The result is an orthogonal line equidistant between them that bisects the plane
+    // defined by the bounding box that the points are in.
+    // Given two points defined in points.xs, points.ys, change the code below
+    // so that the graph structure contains one edge line: the line that bisects
+    // the plane between the two points.
     graph = new Graph();
     
     // Replace this code with your own!
