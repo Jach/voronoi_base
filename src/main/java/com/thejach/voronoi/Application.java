@@ -4,10 +4,6 @@ import io.javalin.Javalin;
 import io.javalin.Context;
 import io.javalin.embeddedserver.Location;
 
-import be.humphreys.simplevoronoi.GraphEdge;
-import be.humphreys.simplevoronoi.Voronoi;
-
-import java.util.List;
 import java.util.Optional;
 
 public class Application {
@@ -44,23 +40,23 @@ public class Application {
    * each value being numeric and defining the edge lines starting at x0,y0 and ending at x1,y1.
    */
   public static void handleGenerate(Context ctx) {
-      //String algo = ctx.param("algorithm");
+    GenerateInputHandler handler = new GenerateInputHandler();
+    handler.handle(ctx.body());
 
-      GenerateInputHandler handler = new GenerateInputHandler();
+    Optional<Points> maybePoints = handler.getPoints();
+    Optional<BoundingBox> maybeBoundingBox = handler.getBoundingBox();
 
-      handler.handle(ctx.body());
-
-      Optional<Points> maybePoints = handler.getPoints();
-      Optional<BoundingBox> maybeBoundingBox = handler.getBoundingBox();
-
-      if (!maybePoints.isPresent() || !maybeBoundingBox.isPresent()) {
-        return;
-      }
-
-      Voronoi v = new Voronoi(0.00001);
-      List<GraphEdge> allEdges = v.generateVoronoi(maybePoints.get().xs, maybePoints.get().ys, maybeBoundingBox.get().minX, maybeBoundingBox.get().maxX, maybeBoundingBox.get().minY, maybeBoundingBox.get().maxY);
-
-      ctx.json(allEdges);
-
+    if (!maybePoints.isPresent() || !maybeBoundingBox.isPresent()) {
+      ctx.json(new VoronoiBaseError("Both points and a bounding box must be supplied."));
+      return;
     }
+
+    if (maybePoints.get().xs.length < 2) {
+      ctx.json(new VoronoiBaseError("Must supply two or more points."));
+      return;
+    }
+
+    VoronoiGenerator gen = new VoronoiGenerator(ctx.param("algorithm"), maybePoints.get(), maybeBoundingBox.get());
+    ctx.json(gen.getGraph());
+  }
 }

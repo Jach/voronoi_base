@@ -75,6 +75,8 @@ function setup() {
   document.getElementById('run_fortune').addEventListener('click', on_click_run_fortune);
 
   document.getElementById('fill_cells_with_color').addEventListener('click', on_click_fill_cells_with_color);
+  document.getElementById('fill_cells_with_color').disabled = true; // until todo is resolved
+  document.getElementById('fill_cells_with_color').parentNode.style.textDecoration = 'line-through'; // until todo is resolved
 
   redraw_canvas();
 }
@@ -126,7 +128,7 @@ function on_click_run_custom(e) {
   e.target.disabled = true;
   request_generate('custom', function(data) {
     e.target.disabled = false;
-    console.log(data);
+    draw_voronoi(data);
   });
 }
 
@@ -134,9 +136,8 @@ function on_click_run_fortune(e) {
   e.target.disabled = true;
   request_generate('fortune', function(data) {
     e.target.disabled = false;
-    draw_voronoi(data, 'fortune');
+    draw_voronoi(data);
   });
-
 }
 
 function on_click_fill_cells_with_color(e) {
@@ -174,20 +175,33 @@ function redraw_canvas() {
 
 }
 
-function draw_voronoi(graph, algo) {
-  var ctx = canvas.getContext('2d');
-
-  if (algo === 'fortune') {
-    // graph data is an array of {x1: x1, y1: y1, x2: x2, y2: y2} edges
-    ctx.beginPath();
-
-    for (var i = 0; i < graph.length; i++) {
-      var edge = graph[i];
-      ctx.moveTo(edge.x1, edge.y1);
-      ctx.lineTo(edge.x2, edge.y2);
-    }
-    ctx.stroke();
+/*
+ * Draws the voronoi diagram by using the edge data in graph to draw lines from each pair of points (x0, y0) to (x1, y1).
+ *
+ * @param graph - an object containing a structure like {'edges': [{x0: x0, y0: y0, x1: x1, y1: y1}, ...]}
+ *                or if there is a known error, an object containing {'errorMessage': 'error message'}
+ */
+function draw_voronoi(graph) {
+  graph = graph || {};
+  if (!graph.hasOwnProperty('edges')) {
+    var error = graph.errorMessage || 'An unknown error has occurred.';
+    show_error_message(error);
+    return;
   }
+
+  redraw_canvas();
+
+  var edges = graph.edges;
+
+  var ctx = canvas.getContext('2d');
+  ctx.beginPath();
+
+  for (var i = 0; i < edges.length; i++) {
+    var edge = edges[i];
+    ctx.moveTo(edge.x0, edge.y0);
+    ctx.lineTo(edge.x1, edge.y1);
+  }
+  ctx.stroke();
 }
 
 function request_generate(algorithm, cb) {
@@ -209,6 +223,10 @@ function request_generate(algorithm, cb) {
     points: points,
     bounding_box: [0, 0, canvas.width, canvas.height]
   }));
+}
+
+function show_error_message(msg) {
+  alert(msg);
 }
 
 /*
