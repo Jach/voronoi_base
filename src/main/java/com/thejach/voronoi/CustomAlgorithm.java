@@ -83,7 +83,33 @@ public class CustomAlgorithm implements VoronoiAlgorithm {
     // and where the line intersects the y axis at x == max X
     double startX = pointOnLineGivenY(boundingBox.minY, perpSlope, midpointX, midpointY);
     double endX = pointOnLineGivenY(boundingBox.maxY, perpSlope, midpointX, midpointY);
-    graph.addEdge(new Edge(startX, boundingBox.minY, endX, boundingBox.maxY));
+    
+    double startY = pointOnLineGivenX(boundingBox.minX, perpSlope, midpointX, midpointY);
+    double endY = pointOnLineGivenX(boundingBox.maxX, perpSlope, midpointX, midpointY);
+
+    // The edge points will be on two of the four sides of the box to be bounded.
+    double startEdgeX, startEdgeY, endEdgeX, endEdgeY;
+    if (startX < boundingBox.minX) { // Starting point's x is out of bounds, we need to use startY set instead
+      startEdgeX = boundingBox.minX;
+      startEdgeY = startY;
+    } else if (startX > boundingBox.maxX) {
+      startEdgeX = boundingBox.maxX;
+      startEdgeY = endY;
+    } else {
+      startEdgeX = startX;
+      startEdgeY = boundingBox.minY;
+    }
+    if (endX > boundingBox.maxX) {
+      endEdgeX = boundingBox.maxX;
+      endEdgeY = endY;
+    } else if (endX < boundingBox.minX) {
+      endEdgeX = boundingBox.minX;
+      endEdgeY = startY;
+    } else {
+      endEdgeX = endX;
+      endEdgeY = boundingBox.maxY;
+    }
+      graph.addEdge(new Edge(startEdgeX, startEdgeY, endEdgeX, endEdgeY));
   }
   
   // given point-slope equation of a line for point (a, b) and slope m,
