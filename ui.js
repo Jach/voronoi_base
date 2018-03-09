@@ -269,6 +269,9 @@ function draw_voronoi(graph_data, algo) {
   redraw_canvas(overlay_graphs);
 
   var edges = graph_data.edges;
+  if (fill_cells_with_color && edges[0].site1_i != -1) {
+    colorize_voronoi(edges);
+  }
 
   var ctx = canvas.getContext('2d');
   ctx.strokeStyle = '#000000';
@@ -301,9 +304,115 @@ function draw_voronoi(graph_data, algo) {
   ctx.strokeStyle = '#000000';
   ctx.lineWidth = 1;
 
-  if (fill_cells_with_color && edges[0].site1_i != -1) {
-    // TODO
+}
+
+function colorize_voronoi(edges) {
+  var ctx = canvas.getContext('2d');
+  for (var si = 0; si < site_points.length; si++) {
+    var col = randColor();
+    console.log('%cSite ' + si, 'color: ' + col + ';');
+    var drawing_edges = find_edges_next_to_site(edges, si);
+    console.log('Drawing edges', drawing_edges);
+    var ordered_edges = order_edges_for_polygon(drawing_edges);
+    console.log('Ordered edges', ordered_edges);
+
+    ctx.fillStyle = col;
+    ctx.beginPath();
+    // Look ahead to second edge to decide if we need to start at
+    // x0,y0 or x1,y1...
+
+    var oedge = ordered_edges[0];
+    var next = ordered_edges[1];
+    var last_spot;
+    if (fleq(oedge.x0, next.x0) && fleq(oedge.y0, next.y0)) {
+      ctx.moveTo(oedge.x1, oedge.y1);
+      last_spot = [oedge.x1, oedge.y1];
+    } else {
+      ctx.moveTo(oedge.x0, oedge.y0);
+      last_spot = [oedge.x0, oedge.y0];
+    }
+    console.log('Start spot: ', last_spot);
+    for (var ei = 0; ei < ordered_edges.length; ei++) {
+      oedge = ordered_edges[ei];
+      if (fleq(oedge.x0, last_spot[0]) && fleq(oedge.y0, last_spot[1])) {
+        ctx.lineTo(oedge.x1, oedge.y1);
+        last_spot = [oedge.x1, oedge.y1];
+      } else {
+        ctx.lineTo(oedge.x0, oedge.y0);
+        last_spot = [oedge.x0, oedge.y0];
+      }
+      console.log('Next spot: ', last_spot);
+    }
+    ctx.fill();
   }
+  redraw_canvas(true);
+}
+
+function randColor() {
+  var hex = '0123456789abcdef';
+  col = '#';
+  for (var i = 0; i < 6; i++) {
+    col += hex[Math.floor(Math.random()*hex.length)];
+  }
+  return col;
+}
+
+function fleq(fl1, fl2) {
+  return Math.abs(fl1 - fl2) < 0.0001;
+}
+
+/**
+ * Looks through edges to filter where an edge has a site index
+ * equal to site_i. Returns those edges.
+ * (Future optimization: remove those edges from either caller side or
+ * here (making it no longer functional) to avoid duplicate search.
+ * Or construct a lookup table.)
+ */
+function find_edges_next_to_site(edges, site_i) {
+  return edges.filter(function(edge) { return edge.site1_i === site_i || edge.site2_i === site_i; });
+}
+
+/**
+ * Given edges in any order, returns an ordered version where each successor
+ * edge is connected to the previous edge by either head or tail.
+ * If the final edge does not connect with the first edge,
+ * we'll assume it's because it's a boundary polygon and we didn't
+ * have the boundary edges given so we will create them.
+ * (TODO: actually create them...)
+ */
+function order_edges_for_polygon(oedges) {
+  var edges = JSON.parse(JSON.stringify(oedges));
+  var needs_edges_for_loop = true;
+  // If any edge starts at a boundary line on x or y, start with that one.
+  // Otherwise start with the first one.
+  var idx = edges.findIndex(function(e) { return e.x0 === 0 || e.x0 === canvas.width || e.x1 === 0 || e.x1 === canvas.width || e.y0 === 0 || e.y0 === canvas.height || e.y1 === 0 || e.y1 === canvas.height; });
+  if (idx === -1) {
+    idx = 0;
+    needs_edges_for_loop = false;
+  }
+  var sorted_edges = [edges.splice(idx, 1)[0]];
+  var prev = sorted_edges[0];
+  while (edges.length > 0) {
+    var next_idx = find_connected_edge(edges, prev);
+    prev = edges.splice(next_idx, 1)[0];
+    sorted_edges.push(prev);
+  }
+
+  if (needs_edges_for_loop) {
+    sorted_edges.push(sorted_edges[0]);
+  }
+  return sorted_edges;
+}
+
+/**
+ * Returns index of edges array where an edge (either (x0,y0) or (x1,y1))
+ * matches the given edge
+ * on either (x0,y0) or (x1,y1)
+ */
+function find_connected_edge(edges, edge) {
+  return edges.findIndex(function(e) { 
+    return fleq(e.x0, edge.x0) && fleq(e.y0, edge.y0) || fleq(e.x1, edge.x1) && fleq(e.y1, edge.y1) || fleq(e.x0, edge.x1) && fleq(e.y0, edge.y1) || fleq(e.x1, edge.x0) && fleq(e.y1, edge.y0);
+  });
 }
 
 /**
