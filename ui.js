@@ -307,9 +307,40 @@ function draw_voronoi(graph_data, algo) {
 }
 
 function colorize_voronoi(edges) {
+  var colormap;
+  if (is_offline) {
+    colormap = get_colormap(edges, site_points.length);
+    colorize_voronoi_cb(edges, colormap);
+  } else {
+    var request = new XMLHttpRequest();
+    request.open('POST', '/colorize/colormap', true);
+    request.onload = function() {
+      if (this.status >= 200 && this.status < 400) {
+        // hack until colorizing works with incomplete polygons,
+        // always use local fortune edge algorithm edges instead...
+        var resp = this.response;
+        request_offline_generate('fortune', function(graph) {
+          colorize_voronoi_cb(graph.edges, JSON.parse(resp).colormap);
+        });
+      } else {
+        // some error
+      }
+    };
+    request.onerror = function() {
+      // ignore it...
+    };
+
+    request.send(JSON.stringify({
+      edges: edges,
+      sites: site_points.length
+    }));
+  }
+}
+
+function colorize_voronoi_cb(edges, colormap) {
   var ctx = canvas.getContext('2d');
   for (var si = 0; si < site_points.length; si++) {
-    var col = randColor();
+    var col = colormap[si];
     //console.log('%cSite ' + si, 'color: ' + col + ';');
     var drawing_edges = find_edges_next_to_site(edges, si);
     //console.log('Drawing edges', drawing_edges);
@@ -332,15 +363,6 @@ function colorize_voronoi(edges) {
  */
 function filter_points(edges) {
   return edges.filter(function(e) { return !(e.x0 === e.x1 && e.y0 === e.y1); });
-}
-
-function randColor() {
-  var hex = '0123456789abcdef';
-  col = '#';
-  for (var i = 0; i < 6; i++) {
-    col += hex[Math.floor(Math.random()*hex.length)];
-  }
-  return col;
 }
 
 function fleq(fl1, fl2) {
