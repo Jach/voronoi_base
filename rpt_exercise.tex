@@ -12,6 +12,7 @@
 \DeclareGraphicsExtensions{.png}
 \DeclareGraphicsExtensions{.jpg}
 
+\usepackage[hidelinks]{hyperref}
 \usepackage{url}
 
 \newcommand{\nl}{\newline}
@@ -104,6 +105,7 @@ You should attempt the problem statement for maximum effect, but here are some
 suggestions for other things you can do instead / in addition, and you're free
 to try wowing us with your own ideas here.
 
+\newpage
 \begin{enumerate}
   \item Try solving a simpler subproblem first, for example what is the diagram
     when you only have two Site points? What about only 3 points? \textbf{Make
@@ -115,10 +117,11 @@ to try wowing us with your own ideas here.
   \item We are a dev/QE hybrid team. The provided \texttt{FortuneAlgorithm.java}
     class results in a known-correct set of edges, but is it actually correct?
     How might you assess its quality?
-  \item A dual graph of a voronoi diagram is a Delaunay triangularization. Can
+  \item A dual graph of a Voronoi diagram is a Delaunay triangularization. Can
     you generate the dual? Can you output its edges so that it draws?
   \item Can you color the graph Cells such that no two adjacent cells share the
-    same color? (See \texttt{GraphColorizer.java} or
+    same color, and so you never have to use more than the minimum necessary
+    unique colors? (See \texttt{GraphColorizer.java} or
     \texttt{graph\_colorizer.js} for hints on where to start if you decide to
     try this.)
   \item If you generate the graph by plotting a bunch of points, can you take
@@ -169,6 +172,8 @@ Perpendicular slope:
 $$slope_{perp} = \frac{-1}{slope}$$
 
 This is open book / internet, just be prepared to deeply explain everything you
-do including how you arrived at writing any particularly piece of code.
+do including how you arrived at writing any particularly piece of code. Marking
+commented out sections / otherwise dead code can be illuminating for our end in
+understanding how you develop software.
 
 \end{document}

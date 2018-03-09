@@ -269,8 +269,8 @@ function draw_voronoi(graph_data, algo) {
   redraw_canvas(overlay_graphs);
 
   var edges = graph_data.edges;
-  if (fill_cells_with_color && edges[0].site1_i != -1) {
-    colorize_voronoi(edges);
+  if (fill_cells_with_color && edges[0].site1_i != -1 && edges[0].site1_i !== undefined) {
+    colorize_voronoi(filter_points(edges));
   }
 
   var ctx = canvas.getContext('2d');
@@ -310,42 +310,28 @@ function colorize_voronoi(edges) {
   var ctx = canvas.getContext('2d');
   for (var si = 0; si < site_points.length; si++) {
     var col = randColor();
-    console.log('%cSite ' + si, 'color: ' + col + ';');
+    //console.log('%cSite ' + si, 'color: ' + col + ';');
     var drawing_edges = find_edges_next_to_site(edges, si);
-    console.log('Drawing edges', drawing_edges);
-    var ordered_edges = order_edges_for_polygon(drawing_edges);
-    console.log('Ordered edges', ordered_edges);
+    //console.log('Drawing edges', drawing_edges);
+    var ordered_path = order_path_for_polygon(drawing_edges);
+    //console.log('Ordered path', ordered_path);
 
     ctx.fillStyle = col;
     ctx.beginPath();
-    // Look ahead to second edge to decide if we need to start at
-    // x0,y0 or x1,y1...
-
-    var oedge = ordered_edges[0];
-    var next = ordered_edges[1];
-    var last_spot;
-    if (fleq(oedge.x0, next.x0) && fleq(oedge.y0, next.y0)) {
-      ctx.moveTo(oedge.x1, oedge.y1);
-      last_spot = [oedge.x1, oedge.y1];
-    } else {
-      ctx.moveTo(oedge.x0, oedge.y0);
-      last_spot = [oedge.x0, oedge.y0];
-    }
-    console.log('Start spot: ', last_spot);
-    for (var ei = 0; ei < ordered_edges.length; ei++) {
-      oedge = ordered_edges[ei];
-      if (fleq(oedge.x0, last_spot[0]) && fleq(oedge.y0, last_spot[1])) {
-        ctx.lineTo(oedge.x1, oedge.y1);
-        last_spot = [oedge.x1, oedge.y1];
-      } else {
-        ctx.lineTo(oedge.x0, oedge.y0);
-        last_spot = [oedge.x0, oedge.y0];
-      }
-      console.log('Next spot: ', last_spot);
+    ctx.moveTo(ordered_path[0][0], ordered_path[0][1]);
+    for (var i = 1; i < ordered_path.length; i++) {
+      ctx.lineTo(ordered_path[i][0], ordered_path[i][1]);
     }
     ctx.fill();
   }
   redraw_canvas(true);
+}
+
+/**
+ * Remove any edges that are points...
+ */
+function filter_points(edges) {
+  return edges.filter(function(e) { return !(e.x0 === e.x1 && e.y0 === e.y1); });
 }
 
 function randColor() {
@@ -373,46 +359,105 @@ function find_edges_next_to_site(edges, site_i) {
 }
 
 /**
- * Given edges in any order, returns an ordered version where each successor
- * edge is connected to the previous edge by either head or tail.
- * If the final edge does not connect with the first edge,
- * we'll assume it's because it's a boundary polygon and we didn't
- * have the boundary edges given so we will create them.
- * (TODO: actually create them...)
+ * Given edges in any order, returns an ordered version that forms a
+ * polygon loop: [ [x, y], [x, y], [x, y] ] would form a connected triangle.
+ * You can draw it starting at the first pair, drawing to the second,
+ * then drawing to the third. (From there an implicit draw back to the first
+ * forms the completed shape.)
+ *
+ * Currently has some buggy behavior of oedges does not contain
+ * enough edges to form a full loop. e.g. the Fortune algo on the server
+ * does not give line segments that lie on the edge, however the JS
+ * algo does, recommend you use 'offline' mode for coloring attempts.
  */
-function order_edges_for_polygon(oedges) {
+function order_path_for_polygon(oedges) {
   var edges = JSON.parse(JSON.stringify(oedges));
   var needs_edges_for_loop = true;
   // If any edge starts at a boundary line on x or y, start with that one.
-  // Otherwise start with the first one.
-  var idx = edges.findIndex(function(e) { return e.x0 === 0 || e.x0 === canvas.width || e.x1 === 0 || e.x1 === canvas.width || e.y0 === 0 || e.y0 === canvas.height || e.y1 === 0 || e.y1 === canvas.height; });
+  // Otherwise start with the first one since we should have a loop already.
+  var idx = edges.findIndex(edge_touches_border);
   if (idx === -1) {
     idx = 0;
     needs_edges_for_loop = false;
   }
-  var sorted_edges = [edges.splice(idx, 1)[0]];
-  var prev = sorted_edges[0];
+  var first = edges.splice(idx, 1)[0];
+  var start_point;
+  var prev;
+  if (needs_edges_for_loop) {
+    start_point = get_edge_touches_border(first);
+    prev = get_other_edge_when_touches_border(first);
+  } else {
+    start_point = [first.x0, first.y0];
+    prev = [first.x1, first.y1];
+  }
+
+  var sorted_edges = [start_point, prev];
   while (edges.length > 0) {
     var next_idx = find_connected_edge(edges, prev);
-    prev = edges.splice(next_idx, 1)[0];
-    sorted_edges.push(prev);
+    if (next_idx === -1) {
+      console.log('Failed to find connected edge given for ', prev[0], prev[1]);
+      break;
+    }
+    var next = get_opposite_edge_from_connected(edges[next_idx], prev);
+    edges.splice(next_idx, 1);
+    sorted_edges.push(next);
+    prev = next;
   }
 
   if (needs_edges_for_loop) {
-    sorted_edges.push(sorted_edges[0]);
+    //sorted_edges.push(sorted_edges[0]);
   }
   return sorted_edges;
 }
 
 /**
- * Returns index of edges array where an edge (either (x0,y0) or (x1,y1))
- * matches the given edge
- * on either (x0,y0) or (x1,y1)
+ * If either of e's (x0, y0) or (x1, y0) touches the border,
+ * returns the pair as an array of [x, y]. If neither do,
+ * returns null.
  */
-function find_connected_edge(edges, edge) {
+function get_edge_touches_border(e) {
+  if (e.x0 === 0 || e.x0 === canvas.width || e.y0 === 0 || e.y0 === canvas.height) {
+    return [e.x0, e.y0];
+  } else if (e.x1 === 0 || e.x1 === canvas.width || e.y1 === 0 || e.y1 === canvas.height) {
+    return [e.x1, e.y1];
+  }
+  return null;
+}
+
+function get_other_edge_when_touches_border(e) { // gets the opposite edge of above
+  if (e.x0 === 0 || e.x0 === canvas.width || e.y0 === 0 || e.y0 === canvas.height) {
+    return [e.x1, e.y1];
+  } else if (e.x1 === 0 || e.x1 === canvas.width || e.y1 === 0 || e.y1 === canvas.height) {
+    return [e.x0, e.y0];
+  }
+  return null;
+}
+
+function edge_touches_border(e) {
+  return get_edge_touches_border(e) !== null;
+}
+
+/**
+ * Returns index of edges array where a point matches either
+ * end of the edge.
+ */
+function find_connected_edge(edges, point) {
   return edges.findIndex(function(e) { 
-    return fleq(e.x0, edge.x0) && fleq(e.y0, edge.y0) || fleq(e.x1, edge.x1) && fleq(e.y1, edge.y1) || fleq(e.x0, edge.x1) && fleq(e.y0, edge.y1) || fleq(e.x1, edge.x0) && fleq(e.y1, edge.y0);
+    return fleq(e.x0, point[0]) && fleq(e.y0, point[1]) || fleq(e.x1, point[0]) && fleq(e.y1, point[1]);
   });
+}
+
+/**
+ * Given point that matches either (x0,y0) or (x1,y1),
+ * return the opposite that doesn't match.
+ */
+function get_opposite_edge_from_connected(edge, point) {
+  if (fleq(edge.x0, point[0]) && fleq(edge.y0, point[1])) {
+    return [edge.x1, edge.y1];
+  } else if (fleq(edge.x1, point[0]) && fleq(edge.y1, point[1])) {
+    return [edge.x0, edge.y0];
+  }
+  return null;
 }
 
 /**
@@ -474,9 +519,9 @@ function request_offline_generate(algorithm, cb) {
   if (algorithm === 'fortune') {
     var voronoi = new Voronoi();
     var bbox = {xl: 0, yt: 0, xr: canvas.width, yb: canvas.height};
-    var sites = site_points.map(function(p) { return {x: p[0], y: p[1]}; });
+    var sites = site_points.map(function(p, pi) { return {x: p[0], y: p[1], pi: pi}; });
     var diagram = voronoi.compute(sites, bbox);
-    var edges = diagram.edges.map(function(e) { return {x0: e.va.x, y0: e.va.y, x1: e.vb.x, y1: e.vb.y}; });
+    var edges = diagram.edges.map(function(e) { return {x0: e.va.x, y0: e.va.y, x1: e.vb.x, y1: e.vb.y, site1_i: (e.lSite||{}).pi, site2_i: (e.rSite||{}).pi}; });
 
     cb({edges: edges});
   } else {
