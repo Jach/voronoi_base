@@ -6,11 +6,11 @@ import be.humphreys.simplevoronoi.GraphEdge;
 import be.humphreys.simplevoronoi.Voronoi;
 
 public class FortuneAlgorithm implements VoronoiAlgorithm {
-  private Points points;
+  private SitePoints points;
   private BoundingBox boundingBox;
   private List<GraphEdge> generatedAllEdges;
 
-  public FortuneAlgorithm(Points points, BoundingBox boundingBox) {
+  public FortuneAlgorithm(SitePoints points, BoundingBox boundingBox) {
     this.points = points;
     this.boundingBox = boundingBox;
   }

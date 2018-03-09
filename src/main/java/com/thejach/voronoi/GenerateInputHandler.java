@@ -9,13 +9,13 @@ import org.json.*;
  */
 public class GenerateInputHandler {
 
-  private Optional<Points> maybePoints = Optional.empty();
+  private Optional<SitePoints> maybeSitePoints = Optional.empty();
   private Optional<BoundingBox> maybeBoundingBox = Optional.empty();
 
   public void handle(String json) {
     try {
       JSONObject input = new JSONObject(json);
-      JSONArray points = input.getJSONArray("points");
+      JSONArray points = input.getJSONArray("site_points");
 
       double[] xs = new double[points.length()];
       double[] ys = new double[points.length()];
@@ -33,18 +33,18 @@ public class GenerateInputHandler {
       double maxX = boundingBox.getDouble(2);
       double maxY = boundingBox.getDouble(3);
 
-      maybePoints = Optional.of(new Points(xs, ys));
+      maybeSitePoints = Optional.of(new SitePoints(xs, ys));
       maybeBoundingBox = Optional.of(new BoundingBox(minX, minY, maxX, maxY));
     } catch (JSONException e) {
       // Bail out, make sure points and boundingBox remain empty
-      maybePoints = Optional.empty();
+      maybeSitePoints = Optional.empty();
       maybeBoundingBox = Optional.empty();
     }
 
   }
 
-  public Optional<Points> getPoints() {
-    return maybePoints;
+  public Optional<SitePoints> getSitePoints() {
+    return maybeSitePoints;
   }
 
   public Optional<BoundingBox> getBoundingBox() {

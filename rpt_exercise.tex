@@ -52,7 +52,8 @@ port 7171 that you can interact with by visiting
 \texttt{ui.js} file, they provide a UI and means to interact with the server.
 However, if you do not possess a Java environment, you
 are free to write your code in JavaScript instead, see the next section for
-details.
+details, however it's recommended you read this section too since the details
+are very similar.
 
 The Java file \texttt{CustomAlgorithm.java} is the primary file you will need to edit in
 order to complete the problem statement. You are of course free to introduce new
@@ -87,6 +88,13 @@ a visible line as if your edge was from $(0,0)$ to $(800,600)$.
 If you are not writing in JavaScript you can skip this section.\nl
 The code you will need to manipulate is in \texttt{custom\_algorithm.js}.
 
+Specifically, just like the Java version, there is a \texttt{generate} method
+whose role is to add edge points. This is where you will write your code, but
+you can add any other functions or methods you need. Ultimately the method must
+populate a Graph object with new edges, just like above, and make sure that
+Graph object is assigned to the graph member variable of the CustomAlgorithm
+class.
+
 \subsection*{Scoring Criteria}
 
 Our intent is to keep any candidate busy for the allotted time, not to make a
@@ -96,7 +104,6 @@ You should attempt the problem statement for maximum effect, but here are some
 suggestions for other things you can do instead / in addition, and you're free
 to try wowing us with your own ideas here.
 
-\newpage
 \begin{enumerate}
   \item Try solving a simpler subproblem first, for example what is the diagram
     when you only have two Site points? What about only 3 points? \textbf{Make
@@ -123,6 +130,10 @@ to try wowing us with your own ideas here.
   \item Do you understand the performance profile?
   \item If this is child's play, you can attempt your own version of Fortune's
     Algorithm, just be ready to explain it to us!
+  \item Do you really hate Java/JS? Well, that's what we mostly do here! But
+    you're free to write your own stuff from scratch in whatever language and
+    stack you like (for instance an android app done in Kotlin), but it must
+    allow us to interactively add points and generate a diagram.
 
 \end{enumerate}
 

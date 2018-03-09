@@ -17,6 +17,8 @@ public class Application {
       .start();
 
     app.post("/generate/:algorithm", ctx -> handleGenerate(ctx));
+    
+    app.get("/alive", ctx -> ctx.result("true"));
 
     System.out.println("\nStarted application on port " + PORT + ".");
     System.out.println("Visit http://localhost:" + PORT + "/ui.html to get started.");
@@ -29,7 +31,7 @@ public class Application {
    * Expected input shape:
    * ctx contains one param, algorithm, that can be used to determine a generator.
    * ctx has a JSON body with the same
-   * {"points": [[x0, y0], [x1, y1]],
+   * {"sitePoints": [[x0, y0], [x1, y1]],
    * "bounding_box": [minX, minY, maxX, maxY]}
    * All values are numeric.
    *
@@ -43,7 +45,7 @@ public class Application {
     GenerateInputHandler handler = new GenerateInputHandler();
     handler.handle(ctx.body());
 
-    Optional<Points> maybePoints = handler.getPoints();
+    Optional<SitePoints> maybePoints = handler.getSitePoints();
     Optional<BoundingBox> maybeBoundingBox = handler.getBoundingBox();
 
     if (!maybePoints.isPresent() || !maybeBoundingBox.isPresent()) {

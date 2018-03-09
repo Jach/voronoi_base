@@ -4,7 +4,7 @@ public class VoronoiGenerator {
 
   private VoronoiAlgorithm algorithmImpl;
 
-  public VoronoiGenerator(String algorithm, Points points, BoundingBox boundingBox) {
+  public VoronoiGenerator(String algorithm, SitePoints points, BoundingBox boundingBox) {
     if ("fortune".equals(algorithm)) {
       algorithmImpl = new FortuneAlgorithm(points, boundingBox);
     } else if ("custom".equals(algorithm)) {

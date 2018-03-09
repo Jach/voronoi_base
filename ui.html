@@ -26,6 +26,10 @@
   }
 </style>
 
+<script type="text/javascript" src="custom_algorithm.js">
+</script>
+<script type="text/javascript" src="rhill-voronoi-core.js">
+</script>
 <script type="text/javascript" src="ui.js">
 </script>
 
@@ -38,13 +42,16 @@
 </div>
 
 <div id="controls_wrapper">
-  <p><label><input type="radio" id="add_points" name="add_or_remove_points" checked="checked"/>Add points</label></p>
-  <p><label><input type="radio" id="remove_points" name="add_or_remove_points"/>Remove points</label></p>
-  <p><button id="clear_points">Clear points</button></p>
-  <p><button id="load_preset_1">Load Preset #1</button></p>
-  <p><button id="run_custom">Run Custom Algorithm</button></p>
-  <p><button id="run_fortune">Run Bundled Fortune's Algorithm</button></p>
-  <p><label>Fill cells with color? <input type="checkbox" name="fill_cells_with_color" id="fill_cells_with_color" /></label></p>
+  <p><label><input type="radio" id="add_site_points" name="add_or_remove_site_points" checked="checked"/>Add site points</label></p>
+  <p><label><input type="radio" id="remove_site_points" name="add_or_remove_site_points"/>Remove site points</label></p>
+  <p><button id="clear_site_points">Clear site points (c)</button></p>
+  <p><button id="load_preset_1">Load Preset #1 (1)</button></p>
+  <p><button id="load_preset_2">Load Preset #2 (2)</button></p>
+  <p><button id="run_custom">Run Custom Algorithm (a)</button></p>
+  <p><button id="run_fortune">Run Bundled Fortune's Algorithm (f)</button></p>
+  <p><label>Offline Mode <input type="checkbox" name="offline_mode" id="offline_mode" /></label></p>
+  <p><label>Overlay algorithm graphs <input type="checkbox" name="overlay_graphs" id="overlay_graphs"/></label></p>
+  <p><label>Request colorized cells after generation? <input type="checkbox" name="fill_cells_with_color" id="fill_cells_with_color" /></label></p>
 </div>
 
 </body>
