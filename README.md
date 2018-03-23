@@ -11,36 +11,33 @@ See `ui.js` for further details.
 
 Included is an old implementation of the classic Fortune's algorithm to check against. The idea is that using a similar
 interface, the interviewer + candidate should be able to work on algorithm(s) generating the same data. Maybe even work
-up to an independent implementation of Fortune's Algorithm itself! But it also provides a base framework for the interviewer
-to request working code that is easy to verify. e.g. Could ask for an implementation of graph coloring, or just some
-proving ground code like generating a Voronoi diagram containing only two points. Can discuss better refactors,
-improvements, test coverage. Can discuss augmenting the graph structure with the site data or bounding polygon info or other
+up to an independent implementation of Fortune's Algorithm itself!
+
+This also provides a base framework for more traditional interviews... The interviewer can
+request working code that is easy to verify, e.g. in 30-60 minutes generate the diagram for two points
+or given a full two hours generate the full diagram. Alternative problems are available too like 
+getting a demonstration of the 3-color theorem or generating splines, and of course there is always
+the potential to discuss better refactors, improvements, test coverage...
+Can discuss augmenting the graph structure with the site data or bounding polygon info or other
 things to facilitate coloring, answering geospatial queries, implementing convex hull, etc. Lots and lots of options.
 
 ![Result of bundled fortune's algorithm](screenshot.png)
 
 # Usage
 
-This project is composed of two projects.
+This project is a maven project.
 
-If you use Eclipse, and have the m2e plugin installed, set up the first project (this one) with:
+If you use Eclipse, and have the m2e plugin installed, you can import the voronoi\_base project with:
 
 `File -> Import -> Maven -> Existing Maven Projects -> Select the Voronoi Base folder`
 
-You should see an error about the simplevoronoi project not being found. To fix the error, import that project as well.
-
-`File -> Import -> Maven -> Existing Maven Projects -> Select the simplevoronoi folder`
-
 Once that is done you should be able to launch Application.java.
 
-If you want to use the command line only, you need to run two maven commands.
+If you want to use the command line only, you can:
 
 ```
 git clone https://github.com/Jach/voronoi_base
 cd voronoi_base
-cd simplevoronoi
-mvn clean install
-cd ..
 mvn clean package
 ```
 
@@ -54,7 +51,10 @@ and further change-run cycles with `mvn compile exec:java`, alternatively you ca
 
 # License
 
-Copyright (c) 2017 Kevin Secretan
+This project with the exception of rhill-voronoi-core.js and the
+be.humphreys.simplevoronoi folder is hereby released under the following terms.
+
+Copyright (c) 2017-2018 Kevin Secretan
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
