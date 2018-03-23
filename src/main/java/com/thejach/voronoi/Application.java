@@ -2,6 +2,7 @@ package com.thejach.voronoi;
 
 import io.javalin.Javalin;
 import io.javalin.Context;
+import io.javalin.Handler;
 import io.javalin.embeddedserver.Location;
 
 import java.util.ArrayList;
@@ -21,11 +22,26 @@ public class Application {
       .port(PORT)
       .start();
 
-    app.post("/generate/:algorithm", ctx -> handleGenerate(ctx));
+    app.post("/generate/:algorithm", new Handler() {
+      @Override
+      public void handle(Context ctx) throws Exception {
+        handleGenerate(ctx);
+      }
+    });
     
-    app.get("/alive", ctx -> ctx.result("true"));
+    app.get("/alive", new Handler() {
+      @Override
+      public void handle(Context ctx) throws Exception {
+        ctx.result("true");
+      }
+    });
     
-    app.post("/colorize/colormap", ctx -> handleColorizerColorMap(ctx));
+    app.post("/colorize/colormap", new Handler() {
+      @Override
+      public void handle(Context ctx) throws Exception {
+        handleColorizerColorMap(ctx);
+      }
+    });
 
     System.out.println("\nStarted application on port " + PORT + ".");
     System.out.println("Visit http://localhost:" + PORT + "/ui.html to get started.");

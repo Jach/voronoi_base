@@ -1,5 +1,6 @@
 package com.thejach.voronoi;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -21,7 +22,12 @@ public class FortuneAlgorithmGraphConverter implements AlgorithmConverter {
   @Override
   public Graph convert() {
     Graph graph = new Graph();
-    Set<GraphEdge> seenEdges = new TreeSet<>((o1, o2) -> o1.x1 == o2.x1 && o1.y1 == o2.y1 && o1.x2 == o2.x2 && o1.y2 == o2.y2 && o1.site1 == o2.site1 && o1.site2 == o2.site2 ? 0 : -1); // dedupe set
+    Set<GraphEdge> seenEdges = new TreeSet<>(new Comparator<GraphEdge>() {
+      @Override
+      public int compare(GraphEdge o1, GraphEdge o2) {
+        return o1.x1 == o2.x1 && o1.y1 == o2.y1 && o1.x2 == o2.x2 && o1.y2 == o2.y2 && o1.site1 == o2.site1 && o1.site2 == o2.site2 ? 0 : -1; // dedupe set
+      }
+    });
     
     for (GraphEdge fortuneEdge : edges) {
       if (seenEdges.contains(fortuneEdge)) {
