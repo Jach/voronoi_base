@@ -12,6 +12,12 @@ import java.util.Optional;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.thejach.voronoi.custom.GraphColorizer;
+import com.thejach.voronoi.datastructures.BoundingBox;
+import com.thejach.voronoi.datastructures.Edge;
+import com.thejach.voronoi.datastructures.SitePoints;
+import com.thejach.voronoi.input.GenerateInputHandler;
+
 public class Application {
 
   final static int PORT = 7171;
@@ -112,7 +118,17 @@ public class Application {
       return;
     }
 
-    VoronoiGenerator gen = new VoronoiGenerator(ctx.param("algorithm"), maybePoints.get(), maybeBoundingBox.get());
+    VoronoiAlgorithm gen;
+    String algo = ctx.param("algorithm");
+    if ("fortune".equals(algo)) {
+      gen = VoronoiAlgorithmFactory.FortuneGenerator(maybePoints.get(), maybeBoundingBox.get());
+    } else if ("custom".equals(algo)) {
+      gen = VoronoiAlgorithmFactory.CustomGenerator(maybePoints.get(), maybeBoundingBox.get());
+    } else {
+      ctx.json(new VoronoiBaseError("Unknown algorithm, must be one of 'fortune' or 'custom'."));
+      return;
+    }
+    gen.generate();
     ctx.json(gen.getGraph());
   }
 }

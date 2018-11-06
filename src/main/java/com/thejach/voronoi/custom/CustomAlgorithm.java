@@ -1,4 +1,10 @@
-package com.thejach.voronoi;
+package com.thejach.voronoi.custom;
+
+import com.thejach.voronoi.VoronoiAlgorithm;
+import com.thejach.voronoi.datastructures.BoundingBox;
+import com.thejach.voronoi.datastructures.Edge;
+import com.thejach.voronoi.datastructures.Graph;
+import com.thejach.voronoi.datastructures.SitePoints;
 
 public class CustomAlgorithm implements VoronoiAlgorithm {
 

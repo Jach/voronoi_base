@@ -1,9 +1,12 @@
-package com.thejach.voronoi;
+package com.thejach.voronoi.converter;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+
+import com.thejach.voronoi.datastructures.Edge;
+import com.thejach.voronoi.datastructures.Graph;
 
 import be.humphreys.simplevoronoi.GraphEdge;
 

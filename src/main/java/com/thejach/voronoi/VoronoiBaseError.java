@@ -1,6 +1,8 @@
 package com.thejach.voronoi;
 
-public class VoronoiBaseError {
+public class VoronoiBaseError extends Throwable {
+
+  private static final long serialVersionUID = 7621743459208647479L;
 
   private String errorMessage;
 

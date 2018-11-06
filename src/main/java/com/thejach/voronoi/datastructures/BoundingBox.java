@@ -1,4 +1,4 @@
-package com.thejach.voronoi;
+package com.thejach.voronoi.datastructures;
 
 public class BoundingBox {
   public double minX;

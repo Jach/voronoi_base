@@ -1,8 +1,11 @@
-package com.thejach.voronoi;
+package com.thejach.voronoi.input;
 
 import java.util.Optional;
 
 import org.json.*;
+
+import com.thejach.voronoi.datastructures.BoundingBox;
+import com.thejach.voronoi.datastructures.SitePoints;
 
 /**
  * Handles parsing the user input on the /generate route into a trusted form.

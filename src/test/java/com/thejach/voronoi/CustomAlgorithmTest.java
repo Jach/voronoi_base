@@ -4,6 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.thejach.voronoi.custom.CustomAlgorithm;
+import com.thejach.voronoi.datastructures.BoundingBox;
+import com.thejach.voronoi.datastructures.SitePoints;
+
 public class CustomAlgorithmTest {
 
   @Test

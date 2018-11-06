@@ -1,4 +1,4 @@
-package com.thejach.voronoi;
+package com.thejach.voronoi.datastructures;
 
 public class Edge {
   private double x0, y0, x1, y1;

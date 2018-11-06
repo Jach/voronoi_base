@@ -1,4 +1,4 @@
-package com.thejach.voronoi;
+package com.thejach.voronoi.datastructures;
 
 public class SitePoints {
   public double[] xs;

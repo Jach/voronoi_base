@@ -1,6 +1,9 @@
-package com.thejach.voronoi;
+package com.thejach.voronoi.custom;
 
 import java.util.List;
+
+import com.thejach.voronoi.datastructures.Colormap;
+import com.thejach.voronoi.datastructures.Edge;
 
 public class GraphColorizer {
   

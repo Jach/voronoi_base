@@ -1,4 +1,4 @@
-package com.thejach.voronoi;
+package com.thejach.voronoi.datastructures;
 
 import java.util.HashMap;
 import java.util.Map;

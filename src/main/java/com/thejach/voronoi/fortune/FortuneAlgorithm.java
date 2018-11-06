@@ -1,6 +1,12 @@
-package com.thejach.voronoi;
+package com.thejach.voronoi.fortune;
 
 import java.util.List;
+
+import com.thejach.voronoi.VoronoiAlgorithm;
+import com.thejach.voronoi.converter.FortuneAlgorithmGraphConverter;
+import com.thejach.voronoi.datastructures.BoundingBox;
+import com.thejach.voronoi.datastructures.Graph;
+import com.thejach.voronoi.datastructures.SitePoints;
 
 import be.humphreys.simplevoronoi.GraphEdge;
 import be.humphreys.simplevoronoi.Voronoi;
