@@ -33,32 +33,53 @@ function CustomAlgorithm(site_points, bounding_box) {
 }
 
 /**
+ * ====================
  * Your code goes here!
- * Generates the voronoi diagram by inserting
- * edges into this.graph.
+ * Generates the voronoi diagram by 
+ * mutating this.graph.
+ * ====================
  */
 CustomAlgorithm.prototype.generate = function() {
-  var g = new Graph();
+  var g = new Graph(); // The graph holds the edges to draw
+
+  // Extract out the bounds of the screen for convenience
   var min_x = this.bounding_box[0];
   var min_y = this.bounding_box[1];
   var max_x = this.bounding_box[2];
   var max_y = this.bounding_box[3];
+
   var points = this.site_points;
 
-  // Add your code here.
-  // Note that both line segments and points are allowed.
-
-  // 3 demo edges forming an 'X' across the screen and a segment joining the first two input points
-  g.add_edge(min_x, min_y, max_x, max_y);
-  g.add_edge(min_x, max_y, max_x, min_y);
+  // Extract the first two points (you are always guaranteed at least two points)
   var x0 = points[0][0];
   var y0 = points[0][1];
   var x1 = points[1][0];
   var y1 = points[1][1];
+
+  // Add your code here.
+  // The following code is for demoing the data and APIs.
+  // The setup above is meant to help get you going, but you can change/remove it,
+  // and add whatever additional functions you need, but ultimately you should
+  // add edges to the graph to get things to draw.
+
+  // "add_edge" is how you make line segments get drawn by the UI.
+  // It takes four arguments -- the first two define the starting (x,y) point of the line segment,
+  // and the last two define the ending (x,y) point of the line segment.
+  // Here we draw two line segments from the corners of the draw screen (bounding box) to form an 'X'.
+  g.add_edge(min_x, min_y, max_x, max_y);
+  g.add_edge(min_x, max_y, max_x, min_y);
+
+  // Here we draw an edge that connects the first two points.
   g.add_edge(x0, y0, x1, y1);
 
-  // 1 demo point rendering at the middle of the screen, down 5
+  // Note you can also draw points, not just line segments, by making an 'edge'
+  // with the same start point and end point. Here's a point drawn
+  // at the middle of the screen, down 5 pixels.
   g.add_edge(max_x/2, max_y/2-5, max_x/2, max_y/2-5);
+  // Thinking in terms of which points should be drawn may be helpful if thinking in terms of
+  // line segments isn't working...
+
+
 
   this.graph = g; // Make sure g is stored
 };
