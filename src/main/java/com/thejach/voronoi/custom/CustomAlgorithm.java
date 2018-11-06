@@ -37,6 +37,7 @@ public class CustomAlgorithm implements VoronoiAlgorithm {
     // It is only for demoing how to use the available data and APIs.
     // You can add whatever other methods and classes you need,
     // but ultimately you need to add edges to the graph to get things to draw.
+    // Useful formulas you might need are on the last page of the included PDF.
     // ====================
 
     // "addEdge" is how you make line segments get drawn by the UI.

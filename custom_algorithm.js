@@ -61,6 +61,7 @@ CustomAlgorithm.prototype.generate = function() {
   // The setup above is meant to help get you going, but you can change/remove it,
   // and add whatever additional functions you need, but ultimately you should
   // add edges to the graph to get things to draw.
+  // Useful formulas you might need are on the last page of the included PDF.
 
   // "add_edge" is how you make line segments get drawn by the UI.
   // It takes four arguments -- the first two define the starting (x,y) point of the line segment,
