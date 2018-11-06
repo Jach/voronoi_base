@@ -15,6 +15,12 @@ explain what voronoi diagrams are, then give them the problem statement of gener
 a voronoi diagram with only two points -- showing them that it looks like a line that bisects
 the bounded plane between the two points.
 
+If you're feeling trusting, you could have them host their screen instead.. A fun
+project extension would be to include a JS code editor below the graph so that edits can be made
+inline for "offline" mode (like js-fiddle) and then you could send them to
+https://htmlpreview.github.io/?https://github.com/Jach/voronoi_base/blob/master/ui.html
+and let them at it without forcing them to use the dev console for changes.
+
 Then I ask if they prefer JS or Java, and open the code for half of the screen, and paste
 the code for the file they need to edit into the shared text editor.
 (The diff of those files is that I've added the problem statement and useful formulas in comments rather than referring to a PDF.)
