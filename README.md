@@ -16,7 +16,7 @@ up to an independent implementation of Fortune's Algorithm itself!
 This also provides a base framework for more traditional interviews... The interviewer can
 request working code that is easy to verify, e.g. in 30-60 minutes generate the diagram for two points
 or given a full two hours generate the full diagram. Alternative problems are available too like 
-getting a demonstration of the 3-color theorem or generating splines, and of course there is always
+getting a demonstration of the 4-color theorem or generating splines, and of course there is always
 the potential to discuss better refactors, improvements, test coverage...
 Can discuss augmenting the graph structure with the site data or bounding polygon info or other
 things to facilitate coloring, answering geospatial queries, implementing convex hull, etc. Lots and lots of options.
