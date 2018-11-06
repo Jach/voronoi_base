@@ -36,11 +36,16 @@ I'll leave to the candidate for a moment to spot themselves.
 Most candidates get the midpoint x and y quickly. Using algebra to solve for some intersects with the bounding box can be a bit tricky,
 so try to follow them closely and ask them to put their work in the code comments if they're using a pencil once they're done.
 
+If they are really struggling, see if you can guide them to solving the case when the site points are on the same x or the same y.
+
 Scoring-wise, producing one edge is 2 points, and producing two edges is 1 point. Producing a bounded edge is 3 points. Any unit test is 1 point,
 subsequent tests at your discretion for how valuable they are. You may find it useful to write a unit test yourself ahead of time to verify
 the several edge cases automatically.
 
 If they properly handle the vertical and horizontal cases correctly without you pointing them out, 0.5 extra points.
+
+Pedantic but in Java code like `(x + y)/2` can overflow. If they point it out, maybe give them something like 0.1 points.
+If they know how to avoid the floating point cases, maybe more points.
 
 Subjective factors like exceptional code quality or advancing into more complex problem derivatives (3 point case, n point case...)
 can merit extra fractional points.
