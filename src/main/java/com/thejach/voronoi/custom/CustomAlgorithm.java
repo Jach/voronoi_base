@@ -23,25 +23,43 @@ public class CustomAlgorithm implements VoronoiAlgorithm {
 
   @Override
   public void generate() {
+    // The graph represents a set of edges to be drawn or processed.
     graph = new Graph();
-    
-    // Replace this code with your own!
-    // Note that both line segments and points are allowed.
 
-    // 3 demo edges forming an 'X' across the screen and a segment joining the first two input points
-    graph.addEdge(new Edge(boundingBox.minX, boundingBox.minY,
-                           boundingBox.maxX, boundingBox.maxY));
-    graph.addEdge(new Edge(boundingBox.minX, boundingBox.maxY,
-                           boundingBox.maxX, boundingBox.minY));
+    // Extract out the first two points (you are always guaranteed at least two points)
     double x0 = points.xs[0];
     double y0 = points.ys[0];
     double x1 = points.xs[1];
     double y1 = points.ys[1];
+
+    // ====================
+    // Replace this method's code with your own!
+    // It is only for demoing how to use the available data and APIs.
+    // You can add whatever other methods and classes you need,
+    // but ultimately you need to add edges to the graph to get things to draw.
+    // ====================
+
+    // "addEdge" is how you make line segments get drawn by the UI.
+    // It takes four arguments -- the first two define the starting (x,y) point of the line segment,
+    // and the last two define the ending (x,y) point of the line segment.
+    // Here we draw two line segments from the corners of the draw screen (bounding box) to form an 'X'.
+    graph.addEdge(new Edge(boundingBox.minX, boundingBox.minY,
+                           boundingBox.maxX, boundingBox.maxY));
+    graph.addEdge(new Edge(boundingBox.minX, boundingBox.maxY,
+                           boundingBox.maxX, boundingBox.minY));
+    
+    // Here we draw an edge that connects the first two points.
     graph.addEdge(new Edge(x0, y0,
                            x1, y1));
     
-    // 1 demo point rendering at the middle of the screen, down 5
+    // Note that you can also draw points, not just line segments, by making an 'edge'
+    // with the same start point and end point. Here's a point drawn
+    // at the middle of the screen, down 5 pixels.
     graph.addEdge(new Edge(boundingBox.maxX/2, boundingBox.maxY/2-5, boundingBox.maxX/2, boundingBox.maxY/2-5));
+    // Thinking in terms of which points should be drawn may be helpful if thinking in terms of
+    // line segments isn't working...
+
+    
     
   }
 
@@ -49,5 +67,4 @@ public class CustomAlgorithm implements VoronoiAlgorithm {
   public Graph getGraph() {
     return graph;
   }
-
 }
