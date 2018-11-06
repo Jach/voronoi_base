@@ -32,13 +32,32 @@ public class CustomAlgorithm implements VoronoiAlgorithm {
     double x1 = points.xs[1];
     double y1 = points.ys[1];
 
-    // ====================
-    // Replace this method's code with your own!
-    // It is only for demoing how to use the available data and APIs.
+    // ADD YOUR CODE HERE!
+    
+    // Problem statement:
+    // Observe the behavior of Voronoi diagrams generated from two Site points.
+    // The result is an orthogonal line equidistant between them that bisects the plane
+    // defined by the bounding box that the points are in.
+    // Change the code below so that given two site points, the proper-looking graph
+    // is drawn.
+
+    // Some potentially useful formulas:
+    // * Midpoint between two points (x0, y0) and (x1, y1) is the point ( (x0+x1)/2, (y0+y1)/2)
+    // * Distance formula between two points is distance = sqrt((x0-x1)^2 + (y0-y1)^2)
+    // * The slope between two points is the change in y over the change in x: (y1 - y0) / (x1 - x0)
+    // * The perpendicular slope is: -1/slope
+    // * There are different ways to represent a Line. One way is the slope-intercept form:
+    //     y = mx + b
+    //     inputs are m, the line slope, and b, the y-intercept
+    // * The other is the point-slope form:
+    //     y = m(x-a) + b
+    //     inputs are m, the line slope, and some known point on the line (a, b)
+
+    
+    // The following code is for demoing how to use the available data and APIs and should be removed/commented out
+    // for your solution.
     // You can add whatever other methods and classes you need,
     // but ultimately you need to add edges to the graph to get things to draw.
-    // Useful formulas you might need are on the last page of the included PDF.
-    // ====================
 
     // "addEdge" is how you make line segments get drawn by the UI.
     // It takes four arguments -- the first two define the starting (x,y) point of the line segment,

@@ -1,53 +1,53 @@
-# Voronoi Base
+# Two Points Problem Statement Notes
 
-Base code for conducting a new interview experiment: let the interviewer and the candidate try to
-come up with and analyze algorithm(s) for generating Voronoi diagrams!
+This branch is meant for a "phone screen" type of situation where you only have
+30-45 minutes to evaluate the candidate technically. This seems to be a better
+base than asking them to do something like reverse string or whatever, and for
+fast candidates (or more time, like an hour) can discuss trying to solve 3 or n
+points or any of the other ideas mentioned in the original readme and PDF.
 
-The simple frontend lets the user specify points. Clicking either of the two algorithm buttons
-will send the point list up to the server. The server should respond with a Graph data structure
-stringified to JSON. The structure contains at a minimum an "edges" property whose data is an array of
-line objects, each specified with `{x0: x0, y0: y0, x1: x1, y1: y1}` to define the line between points (x0, y0) and (x1, y1).
-See `ui.js` for further details.
+What I do is have them join a video conferencing call, do intros and maybe some soft
+resume questions to warm them up, then I make sure that we are synced with a shared
+text editor like https://codeshare.io/ and then I share my screen.
 
-Included is an old implementation of the classic Fortune's algorithm to check against. The idea is that using a similar
-interface, the interviewer + candidate should be able to work on algorithm(s) generating the same data. Maybe even work
-up to an independent implementation of Fortune's Algorithm itself!
+I have this project running locally, and with screen share I show the application and
+explain what voronoi diagrams are, then give them the problem statement of generating
+a voronoi diagram with only two points -- showing them that it looks like a line that bisects
+the bounded plane between the two points.
 
-This also provides a base framework for more traditional interviews... The interviewer can
-request working code that is easy to verify, e.g. in 30-60 minutes generate the diagram for two points
-or given a full two hours generate the full diagram. Alternative problems are available too like 
-getting a demonstration of the 4-color theorem or generating splines, and of course there is always
-the potential to discuss better refactors, improvements, test coverage...
-Can discuss augmenting the graph structure with the site data or bounding polygon info or other
-things to facilitate coloring, answering geospatial queries, implementing convex hull, etc. Lots and lots of options.
+Then I ask if they prefer JS or Java, and open the code for half of the screen, and paste
+the code for the file they need to edit into the shared text editor.
+(The diff of those files is that I've added the problem statement and useful formulas in comments rather than referring to a PDF.)
+I walk through the demos, tell them to type in the shared
+editor, and any time they are ready they can tell me to paste their code back into my running application
+and try running their custom algorithm to see if the output is good. Also run the Fortune solution for comparison.
+Problem explanation and setup takes about 5 minutes tops.
 
-![Result of bundled fortune's algorithm](screenshot.png)
+I can debug with them, add printlns, add junit tests, whatever, if they request it. If there are trivial syntax issues
+I try to catch and fix them myself in the shared editor, or let the IDE handle it, though some
+I'll leave to the candidate for a moment to spot themselves.
 
-# Usage
+Most candidates get the midpoint x and y quickly. Using algebra to solve for some intersects with the bounding box can be a bit tricky,
+so try to follow them closely and ask them to put their work in the code comments if they're using a pencil once they're done.
 
-This project is a maven project.
+Scoring-wise, producing one edge is 2 points, and producing two edges is 1 point. Producing a bounded edge is 3 points. Any unit test is 1 point,
+subsequent tests at your discretion for how valuable they are. You may find it useful to write a unit test yourself ahead of time to verify
+the several edge cases automatically.
 
-If you use Eclipse, and have the m2e plugin installed, you can import the voronoi\_base project with:
+If they properly handle the vertical and horizontal cases correctly without you pointing them out, 0.5 extra points.
 
-`File -> Import -> Maven -> Existing Maven Projects -> Select the Voronoi Base folder`
+Subjective factors like exceptional code quality or advancing into more complex problem derivatives (3 point case, n point case...)
+can merit extra fractional points.
 
-Once that is done you should be able to launch Application.java.
+A successful brute-force approach that just draws points instead of an edge is at least 1 point,
+but automatic 5.5 points if they can generalize it to the n point case.
 
-If you want to use the command line only, you can:
+A successful single-edge approach using circle intersects is cool enough to merit an automatic 4 points.
 
-```
-git clone https://github.com/Jach/voronoi_base
-cd voronoi_base
-mvn clean package
-```
-
-Then you can launch the application with
-
-`mvn exec:java`
-
-and further change-run cycles with `mvn compile exec:java`, alternatively you can just run the uberjar that was packaged:
-
-`java -jar target/voronoi_base-1.0-SNAPSHOT-jar-with-dependencies.jar`
+Thus the "max" score is around 6.5. To me, an acceptable score is 1 point over 30 minutes, 2 points over 45 minutes, and 3 points over an hour.
+Your standards may differ, think it through ahead of time. If 2 points is reached (e.g. one edge, forgot the horiz/vert cases, no test, no bounds)
+and there is still time left, you can see how far they get covering the things they missed, or try to do something new and add points for that.
+Graph coloring may be fun and for the right candidate easy to show off they are familiar with the obvious backtracking approach.
 
 # License
 
