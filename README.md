@@ -123,21 +123,19 @@ of points where a higher number implies a better performance.
 score = basic\_test\_cases * output\_format\_modifier + edge\_cases + bonus.
 
 ```
-|-------------------------------------------------------------|--------|
++-------------------------------------------------------------+--------+
 | Basic test cases                                            | Points |
-|-------------------------------------------------------------|-------:|
-|-------------------------------------------------------------|-------:|
++=============================================================+=======:+
 | Handles positive slope lines                                |      1 |
-|-------------------------------------------------------------|--------|
++-------------------------------------------------------------+--------+
 | Handles negative slope lines                                |      1 |
-|-------------------------------------------------------------|--------|
++-------------------------------------------------------------+--------+
 | Handles neither of the above fully but has at least         |        |
 | half of a correct line edge extending out from the midpoint |    0.5 |
-|-------------------------------------------------------------|--------|
++-------------------------------------------------------------+--------+
 | Handles same-y site points                                  |   0.25 |
-|-------------------------------------------------------------|--------|
 | Handles same-x site points                                  |   0.25 |
-|-------------------------------------------------------------|--------|
++-------------------------------------------------------------+--------+
 ```
 
 The meat of the score is made up of passing the basic test cases, i.e. solving
@@ -159,13 +157,13 @@ brute-force solution for generating the diagram over N points by drawing pixels
 or some other method, but have yet to have that theory tested.
 
 ```
-|------------------------------------|----------|
++------------------------------------+----------+
 | Output format modifiers            | Modifier |
-|------------------------------------|---------:|
-| Graph drawn with one output edge   |        1 |
-| Graph drawn with two+ output edges |      0.5 |
-| Graph drawn with pixels            |      0.5 |
-|------------------------------------|----------|
++====================================+==========+
+| Graph drawn with one output edge   | 1        |
+| Graph drawn with two+ output edges | 0.5      |
+| Graph drawn with pixels            | 0.5      |
++------------------------------------+----------+
 ```
 
 If the person gets the full 2.5 points above for the basic solution, but does
@@ -176,9 +174,9 @@ points or 0.25 points depends on whether that's the only edge they output or
 not.
 
 ```
-|-------------------------------------------|--------|
++-------------------------------------------+--------+
 | Bounding Box Edge Cases                   | Points |
-|-------------------------------------------|-------:|
++===========================================+=======:+
 | Edge from Top to Right (TR) is bounded    |    0.1 |
 | Edge from Bottom to Right (BR) is bounded |    0.1 |
 | BL                                        |    0.1 |
@@ -189,7 +187,7 @@ not.
 | LR with same-x site points                |    0.1 |
 | TL corner -> BR corner                    |    0.1 |
 | BL corner -> TR corner                    |    0.1 |
-|-------------------------------------------|--------|
++-------------------------------------------+--------+
 ```
 
 The above covers the bounding box cases. Yes the same-x/same-y get counted
@@ -197,17 +195,17 @@ twice, this is just so the total of bounding box cases neatly adds up to 1
 point. The max score now is 3.5 points.
 
 ```
-|------------------------------------------------------------|--------|
++------------------------------------------------------------+--------+
 | Bonus                                                      | Points |
-|------------------------------------------------------------|-------:|
++============================================================+=======:+
 | Writes any unit test                                       |      1 |
 | Handles bounding box being different from 0,0 to 800,600   |   0.25 |
 | Handles 3 points                                           |      7 |
 | Handles N points                                           |    inf |
 | Clean code                                                 |      ? |
 | Knowledge about language trivia like (x+y)/2 overflowing   |      ? |
-| Verbal identification of edge cases and solutions for them |      ? |
-|------------------------------------------------------------|--------|
+| Verbal identification of edge cases and solutions for them |     ?? |
++------------------------------------------------------------+--------+
 ```
 
 The bonus covers a few optional things that can affect the final score. I like
