@@ -122,6 +122,7 @@ of points where a higher number implies a better performance.
 
 score = basic\_test\_cases * output\_format\_modifier + edge\_cases + bonus.
 
+```
 |-------------------------------------------------------------|--------|
 | Basic test cases                                            | Points |
 |-------------------------------------------------------------|-------:|
@@ -137,6 +138,7 @@ score = basic\_test\_cases * output\_format\_modifier + edge\_cases + bonus.
 |-------------------------------------------------------------|--------|
 | Handles same-x site points                                  |   0.25 |
 |-------------------------------------------------------------|--------|
+```
 
 The meat of the score is made up of passing the basic test cases, i.e. solving
 the problem statement. Failure to solve it at all will result in 0 points.
@@ -156,6 +158,7 @@ that given two hours someone could derive or find, understand, and implement a
 brute-force solution for generating the diagram over N points by drawing pixels
 or some other method, but have yet to have that theory tested.
 
+```
 |------------------------------------|----------|
 | Output format modifiers            | Modifier |
 |------------------------------------|---------:|
@@ -163,6 +166,7 @@ or some other method, but have yet to have that theory tested.
 | Graph drawn with two+ output edges |      0.5 |
 | Graph drawn with pixels            |      0.5 |
 |------------------------------------|----------|
+```
 
 If the person gets the full 2.5 points above for the basic solution, but does
 so by outputting two edges from the midpoint instead of one edge, their score
@@ -171,6 +175,7 @@ line. If they only get the partial half-edge, then whether you give them 0.5
 points or 0.25 points depends on whether that's the only edge they output or
 not.
 
+```
 |-------------------------------------------|--------|
 | Bounding Box Edge Cases                   | Points |
 |-------------------------------------------|-------:|
@@ -185,11 +190,13 @@ not.
 | TL corner -> BR corner                    |    0.1 |
 | BL corner -> TR corner                    |    0.1 |
 |-------------------------------------------|--------|
+```
 
 The above covers the bounding box cases. Yes the same-x/same-y get counted
 twice, this is just so the total of bounding box cases neatly adds up to 1
 point. The max score now is 3.5 points.
 
+```
 |------------------------------------------------------------|--------|
 | Bonus                                                      | Points |
 |------------------------------------------------------------|-------:|
@@ -201,6 +208,7 @@ point. The max score now is 3.5 points.
 | Knowledge about language trivia like (x+y)/2 overflowing   |      ? |
 | Verbal identification of edge cases and solutions for them |      ? |
 |------------------------------------------------------------|--------|
+```
 
 The bonus covers a few optional things that can affect the final score. I like
 unit tests, so if the candidate writes one on their own accord that's worth a
