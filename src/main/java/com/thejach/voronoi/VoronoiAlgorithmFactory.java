@@ -7,12 +7,12 @@ import com.thejach.voronoi.fortune.FortuneAlgorithm;
 
 public class VoronoiAlgorithmFactory {
 
-  public static VoronoiAlgorithm FortuneGenerator(SitePoints points, BoundingBox boundingBox) {
-    return new FortuneAlgorithm(points, boundingBox);
-  }
-  
-  public static VoronoiAlgorithm CustomGenerator(SitePoints points, BoundingBox boundingBox) {
-    return new CustomAlgorithm(points, boundingBox);
-  }
+    public static VoronoiAlgorithm FortuneGenerator(SitePoints points, BoundingBox boundingBox) {
+        return new FortuneAlgorithm(points, boundingBox);
+    }
+
+    public static VoronoiAlgorithm CustomGenerator(SitePoints points, BoundingBox boundingBox) {
+        return new CustomAlgorithm(points, boundingBox);
+    }
 
 }

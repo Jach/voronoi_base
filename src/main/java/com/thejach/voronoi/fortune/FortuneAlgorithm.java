@@ -12,25 +12,25 @@ import be.humphreys.simplevoronoi.GraphEdge;
 import be.humphreys.simplevoronoi.Voronoi;
 
 public class FortuneAlgorithm implements VoronoiAlgorithm {
-  private SitePoints points;
-  private BoundingBox boundingBox;
-  private List<GraphEdge> generatedAllEdges;
+    private SitePoints points;
+    private BoundingBox boundingBox;
+    private List<GraphEdge> generatedAllEdges;
 
-  public FortuneAlgorithm(SitePoints points, BoundingBox boundingBox) {
-    this.points = points;
-    this.boundingBox = boundingBox;
-  }
+    public FortuneAlgorithm(SitePoints points, BoundingBox boundingBox) {
+        this.points = points;
+        this.boundingBox = boundingBox;
+    }
 
-  @Override
-  public void generate() {
-    Voronoi v = new Voronoi(0.00001);
-    generatedAllEdges = v.generateVoronoi(points.xs, points.ys,
-        boundingBox.minX, boundingBox.maxX, boundingBox.minY, boundingBox.maxY);
-  }
-  
-  @Override
-  public Graph getGraph() {
-    FortuneAlgorithmGraphConverter converter = new FortuneAlgorithmGraphConverter(generatedAllEdges);
-    return converter.convert();
-  }
+    @Override
+    public void generate() {
+        Voronoi v = new Voronoi(0.00001);
+        generatedAllEdges = v.generateVoronoi(points.xs, points.ys,
+                boundingBox.minX, boundingBox.maxX, boundingBox.minY, boundingBox.maxY);
+    }
+
+    @Override
+    public Graph getGraph() {
+        FortuneAlgorithmGraphConverter converter = new FortuneAlgorithmGraphConverter(generatedAllEdges);
+        return converter.convert();
+    }
 }

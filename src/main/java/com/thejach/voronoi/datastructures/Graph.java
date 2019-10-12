@@ -5,21 +5,21 @@ import java.util.List;
 
 public class Graph {
 
-  private List<Edge> edges;
-  
-  public Graph() {
-    edges = new ArrayList<>();
-  }
+    private List<Edge> edges;
 
-  public List<Edge> getEdges() {
-    return this.edges;
-  }
+    public Graph() {
+        edges = new ArrayList<>();
+    }
 
-  public void setEdges(List<Edge> edges) {
-    this.edges = edges;
-  }
-  
-  public void addEdge(Edge edge) {
-    this.edges.add(edge);
-  }
+    public List<Edge> getEdges() {
+        return this.edges;
+    }
+
+    public void setEdges(List<Edge> edges) {
+        this.edges = edges;
+    }
+
+    public void addEdge(Edge edge) {
+        this.edges.add(edge);
+    }
 }
