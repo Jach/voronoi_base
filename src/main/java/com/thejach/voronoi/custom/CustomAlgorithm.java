@@ -51,7 +51,7 @@ public class CustomAlgorithm implements VoronoiAlgorithm {
         //     inputs are m, the line slope, and b, the y-intercept
         // * The other is the point-slope form:
         //     y = m(x-a) + b
-        //     inputs are m, the line slope, and some known point on the line (a, b)
+        //     inputs are m, the line slope, and some known point (a, b) on the line
 
 
         // The following code is for demoing how to use the available data and APIs and should be removed/commented out
