@@ -72,11 +72,30 @@ form.
 
 The distance formula is included as 1) a mental bump of something to ignore if
 they're going for the midpoint approach and 2) some interesting solutions
-involve only the distance formula. e.g. loop around the points of the bounding
-box, if you find one that is equidistant (within some delta) to the site points
-then you've found one of the endpoints of the graph's line segment. I don't think
-this idea would come to someone without the overall context of the problem being
-stated at first in terms of Voronoi cells.
+involve only the distance formula. For example, you can loop around the points
+of the bounding box, if you find one that is equidistant (within some delta) to
+the site points then you've found one of the endpoints of the graph's line
+segment. I don't think this idea would come to someone without the overall
+context of the problem being stated at first in terms of Voronoi cells.
+
+Another distance-formula approach is to think of the problem this way: the two
+site points are A and B. For the line that bisects the two, we can look at each
+point C as satisfying the equation:
+
+<img src="distancerel.png" width="50%" alt="\sqrt{(C_x-A_x)^2 + (C_y-A_y)^2} = \sqrt{(C_x-B_x)^2 + (C_y - B_y)^2}"/>
+
+That is, the distance from point A to C and the distance from point B to C is
+equal determines all points on the bisecting line. Since we know two X's (or
+two Y's) from the bounding box, if we solve for the unknown Cy (or Cx) we can
+plug in the known values and voila, the two points of the edge are found. (All
+that's left is handling the special case for horizontal/vertical situations,
+and bounding to the visible plane.) If you have a candidate going down that
+path, it can be pretty algebra heavy. Here's a solution for Cy (with Ay and By
+being unequal):
+
+<img src="distancerelsol.png" width="50%" alt="C_y = \frac{A_x^2 + A_y^2 - B_x^2 - B_y^2 + 2(B_xC_x - A_xC_x)}{2(A_y - B_y)}"/>
+
+Anyway, back to the most common midpoint-based idea.
 
 Once the candidates have the midpoints and the perpendicular slope, they reach
 another struggle zone. At this point I tend to point out that the code is
