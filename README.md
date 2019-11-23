@@ -82,7 +82,7 @@ Another distance-formula approach is to think of the problem this way: the two
 site points are A and B. For the line that bisects the two, we can look at each
 point C as satisfying the equation:
 
-<img src="distancerel.png" width="50%" alt="\sqrt{(C_x-A_x)^2 + (C_y-A_y)^2} = \sqrt{(C_x-B_x)^2 + (C_y - B_y)^2}"/>
+<img src="distancerel.png" width="75%" alt="\sqrt{(C_x-A_x)^2 + (C_y-A_y)^2} = \sqrt{(C_x-B_x)^2 + (C_y - B_y)^2}"/>
 
 That is, the distance from point A to C and the distance from point B to C is
 equal determines all points on the bisecting line. Since we know two X's (or
@@ -93,7 +93,7 @@ and bounding to the visible plane.) If you have a candidate going down that
 path, it can be pretty algebra heavy. Here's a solution for Cy (with Ay and By
 being unequal):
 
-<img src="distancerelsol.png" width="50%" alt="C_y = \frac{A_x^2 + A_y^2 - B_x^2 - B_y^2 + 2(B_xC_x - A_xC_x)}{2(A_y - B_y)}"/>
+<img src="distancerelsol.png" width="60%" alt="C_y = \frac{A_x^2 + A_y^2 - B_x^2 - B_y^2 + 2(B_xC_x - A_xC_x)}{2(A_y - B_y)}"/>
 
 Anyway, back to the most common midpoint-based idea.
 
